@@ -4,6 +4,18 @@
         <title>修改商品信息</title>
         <meta http-equiv="content-type" content="text/html;charset=utf-8">
         <link href="<?php echo BACKGROUND_CSS_URL; ?>mine.css" type="text/css" rel="stylesheet">
+        <script type="text/javascript" src="./assets/js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript">
+        $(
+            function (){
+                $('#Goods_goods_path').hide();
+
+                $('#btn_image').click(function(){
+                    $('#Goods_goods_path').click();
+                })
+            }
+        )
+        </script>
     </head>
 
     <body>
@@ -24,7 +36,7 @@
 
         <div style="font-size: 13px;margin: 10px 5px">
             
-            <?php $form = $this -> beginWidget('CActiveForm',array( 'id'=>'link-form','enableAjaxValidation'=>false,'htmlOptions' => array('enctype'=>'multipart/form-data'),'action'=>'./index.php?r=background/goods/update2')); 
+            <?php $form = $this -> beginWidget('CActiveForm',array( 'id'=>'link-form','enableAjaxValidation'=>false,'htmlOptions' => array('enctype'=>'multipart/form-data'),'action'=>'./index.php?r=background/goods/update2/id/'.$goods_model->goods_id)); 
             ?>
             <table border="1" width="100%" class="table_a">
                 <tr>
@@ -69,12 +81,12 @@
                         <?php echo $form->labelEx($goods_model, 'goods_path'); ?>  
                     </td>
                     <td>
-                        <?php //echo $form -> textField($goods_model,'goods_path'); ?>
                         <?php echo $form->FileField($goods_model, 'goods_path'); ?> 
                         <?php echo $form->error($goods_model, 'goods_path'); ?>
+                        <?php echo Chtml::image($goods_model->goods_path,"image",array('width'=>60)); ?>
+                        <?php echo Chtml::button("change", array('id'=>'btn_image')); ?>
                     </td>
                 </tr>
-                
                 <tr>
                     <td>
                         <?php echo $form -> labelEx($goods_model, 'goods_introduce');?>

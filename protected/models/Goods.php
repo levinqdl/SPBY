@@ -21,6 +21,10 @@ class Goods extends CActiveRecord{
     public function tableName() {
         return 'goods';
     }
+
+    public function primaryKey(){
+        return 'goods_id';
+    }
     
      /*
      * 可以定义其他方法，调用类似find()  findAll()

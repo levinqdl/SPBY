@@ -85,12 +85,9 @@ class GoodsController extends Controller {
         $goods_model = $goods_model -> findBySql($sql);
         $this ->renderPartial('update',array('goods_model'=> $goods_model,'category'=>$category));
     }
-    function actionUpdate2(){
-        $goods_model = Goods::model();
-        echo $_POST['Goods']['goods_category'];
-        echo "由于图片有问题，此处测试了";
-        echo $_POST['Goods']['goods_category'];
-                exit();
+    function actionUpdate2( $id ){
+        $id = (int) $id;
+        $goods_model = Goods::model()->findByPk($id);
         $goods_model -> attributes = $_POST['Goods'];
         $goods_model -> goods_create_time =date('Y-m-d H:i:s');
         $file = CUploadedFile::getInstance($goods_model,'goods_path');   //获得一个CUploadedFile的实例
@@ -98,6 +95,10 @@ class GoodsController extends Controller {
                $filename=$file->getName();
                $goods_model->goods_path = './assets/default/img/file_'.time().'_'.rand(0,9999).'.'.$file->extensionName;   //定义文件保存的名称                   
                $file->saveAs($goods_model->goods_path);  
+         }
+
+         if ( !$goods_model->goods_path ){
+            $goods_model->goods_path = Goods::model()->findByPk($id)->goods_path;
          }
          if ($goods_model->save())
          $this->redirect('./index.php?r=background/goods/show');  //重定向到首页
